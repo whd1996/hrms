@@ -1,0 +1,157 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人力资源管理系统-用户权限管理</title>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<!-- <base href="/hrms/static"> -->
+<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css"
+	rel="stylesheet" />
+<link href="plugins/bootstrap-table-1.11.0/bootstrap-table.min.css"
+	rel="stylesheet" />
+<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet" />
+<link href="plugins/jquery-confirm/jquery-confirm.min.css"
+	rel="stylesheet" />
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<link href="css/common.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="main">
+		<div id="toolbar">
+			<a class="waves-effect waves-button" href="javascript:;"
+				onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑权限信息</a>
+		</div>
+		<table id="table"></table>
+	</div>
+	<script src="plugins/jquery.1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
+	<script
+		src="plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="plugins/waves-0.7.5/waves.min.js"></script>
+	<script src="plugins/jquery-confirm/jquery-confirm.min.js"></script>
+	<script src="plugins/select2/js/select2.min.js"></script>
+
+	<script src="js/common.js"></script>
+	<script>
+		var $table = $('#table');
+		$(function() {
+			$(document).on('focus', 'input[type="text"]', function() {
+				$(this).parent().find('label').addClass('active');
+			}).on('blur', 'input[type="text"]', function() {
+				if ($(this).val() == '') {
+					$(this).parent().find('label').removeClass('active');
+				}
+			});
+			// bootstrap table初始化
+			// http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+			$table.bootstrapTable({
+				url : '/hrms/user/listUserRole',
+				method : 'POST',
+				height : getHeight(),
+				striped : true,
+				search : true,
+				searchOnEnterKey : true,
+				showRefresh : true,
+				showToggle : false,
+				showColumns : true,
+				minimumCountColumns : 1,
+				showPaginationSwitch : true,
+				striped : true, //是否显示行间隔色
+				clickToSelect : true,//是否启动单机选中行
+				detailView : true,
+				detailFormatter : 'detailFormatter',
+				pagination : true,
+				paginationLoop : false,
+				classes : 'table .table-striped table-no-bordered',
+				//classes : 'table table-hover table-no-bordered',
+				//class="table .table-striped"
+				//sidePagination: 'server',
+				//silentSort: false,
+				smartDisplay : true,
+				idField : 'id',
+				sortName : 'id',
+				sortOrder : 'desc',
+				escape : true,
+				searchOnEnterKey : true,
+				idField : 'systemId',
+				maintainSelected : true,
+				toolbar : '#toolbar',
+				columns : [ {
+					field : 'staff_name',
+					title : '员工姓名',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'user_account',
+					title : '用户账号',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'department_name',
+					title : '所在部门',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'position',
+					title : '所处职位',
+					sortable : true,
+					align : 'center',
+
+				}, {
+					field : 'position_level',
+					title : '职级',
+					sortable : true,
+					align : 'center',
+
+				}, {
+					field : 'role_id',
+					title : '用户权限',
+					sortable : true,
+					align : 'center',
+					
+				}, {
+					field : 'action',
+					title : '操作',
+					halign : 'center',
+					align : 'center',
+					formatter : 'actionFormatter',
+					events : 'actionEvents',
+					clickToSelect : false
+				} ]
+			}).on('all.bs.table', function(e, name, args) {
+				$('[data-toggle="tooltip"]').tooltip();
+				$('[data-toggle="popover"]').popover();
+			});
+		});
+		function actionFormatter(value, row, index) {
+			return [ '<a class="edit ml10" href="javascript:void(0)updateAction()" data-toggle="tooltip" title="修改"><i class="glyphicon glyphicon-edit"></i></a>　' ].join('');
+		}
+
+		window.actionEvents = {
+
+			'click .edit' : function(e, value, row, index) {
+				updateAction();
+				//console.log(value, row, index);
+			}
+		};
+		function detailFormatter(index, row) {
+			var html = [];
+			$.each(row, function(key, value) {
+				html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+			});
+			return html.join('');
+		}
+		// 编辑
+		function updateAction() {
+			$.alert("只能通过更新职位来获得新权限！")
+		}
+	</script>
+</body>
+</html>

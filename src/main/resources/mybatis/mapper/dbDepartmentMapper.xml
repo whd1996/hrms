@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xpu.hrms.mapper.IDbDepartmentMapper">
+	<!-- 查询语句 -->
+	<select id="listDepartment" resultType="DbDepartment">
+		SELECT
+		d.id,d.department_name,d.position,d.duty FROM db_department d;
+	</select>
+	<!-- 查询语句 -->
+	<select id="selectDpPositionByPositionName" resultType="int">
+		SELECT
+		count(*) FROM db_department where position=#{position};
+	</select>
+	<!-- 查询语句 -->
+	<select id="selectDepartmentById" resultType="DbDepartment">
+		SELECT * FROM
+		db_department where id=#{id};
+	</select>
+	<!-- 查询语句 -->
+	<select id="selectDpByPAndDP" resultType="DbDepartment">
+		SELECT * from
+		db_department where position=#{p} and department_name=#{dp};
+	</select>
+	<!-- 插入语句 -->
+	<insert id="addDepartment">
+		INSERT INTO db_department
+		VALUES(#{id},#{department_name},#{position},#{duty});
+	</insert>
+	<!-- 更新语句 -->
+	<update id="updateDepartment">
+		UPDATE db_department
+		<set>
+			<if test="department_name != null">department_name=#{department_name},</if>
+			<if test="position != null">position=#{position},</if>
+			<if test="duty != null">duty=#{duty}</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+	<!-- 删除语句 -->
+	<delete id="deleteDepartment">
+		delete from db_department
+		WHERE id=#{id};
+	</delete>
+</mapper>

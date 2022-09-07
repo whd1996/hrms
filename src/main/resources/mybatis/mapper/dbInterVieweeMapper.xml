@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xpu.hrms.mapper.IDbIntervieweeMapper">
+	<!-- 查询语句 -->
+	<select id="listInterviewee" resultType="DbInterviewee">
+		SELECT * from
+		db_interviewee;
+	</select>
+
+	<select id="listIntervieweeInfo" resultType="java.util.Map">
+		SELECT
+		u.id,u.staff_name,i.age,i.desired_department,i.desired_position,i.work_experience,i.work_grade,u.creat_time
+		FROM
+		db_user u,
+		db_interviewee i
+		where i.id= u.id;
+	</select>
+	<select id="selectIntervieweeById" resultType="DbInterviewee">
+		SELECT
+		* from
+		db_interviewee i
+		where i.id= #{id};
+	</select>
+
+
+	<!-- 添加面试者 -->
+	<insert id="addInterviewee">
+		insert into db_interviewee
+		values(
+		#{id},
+		#{name},
+		#{sex},
+		#{age},
+		#{desired_position},
+		#{desired_department},
+		#{work_experience},
+		#{work_grade}
+		)
+	</insert>
+	<!-- 删除语句 -->
+	<delete id="deleteInterviewee">
+		delete from db_interviewee where id=#{id};
+	</delete>
+
+</mapper>

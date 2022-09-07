@@ -1,0 +1,364 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人力资源管理系统-用户账号管理</title>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<!-- <base href="/hrms/static"> -->
+<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css"
+	rel="stylesheet" />
+<link href="plugins/bootstrap-table-1.11.0/bootstrap-table.min.css"
+	rel="stylesheet" />
+<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet" />
+<link href="plugins/jquery-confirm/jquery-confirm.min.css"
+	rel="stylesheet" />
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<link href="css/common.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="main">
+		<div id="toolbar">
+			<a id="xzzhxx" class="waves-effect waves-button" href="javascript:;"
+				onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增账号信息</a> <a
+				class="waves-effect waves-button" href="javascript:;" id="bjzhxx"
+				onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑账号信息</a> <a
+				class="waves-effect waves-button" href="javascript:;" id="sczhxx"
+				onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除账号信息</a>
+		</div>
+		<table  id="table" ></table>
+	</div>
+	<!-- 新增 -->
+	<div id="createDialog" class="crudDialog" hidden>
+		<form>
+			<div class="form-group">
+				<label for="input1">员工姓名</label> <input id="staff_name" type="text"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input2">用户账号</label> <input id="user_account"
+					type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input3">用户账号密码</label> <input id="user_password"
+					type="text" class="form-control">
+			</div>
+		</form>
+	</div>
+
+	<script src="plugins/jquery.1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
+	<script
+		src="plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="plugins/waves-0.7.5/waves.min.js"></script>
+	<script src="plugins/jquery-confirm/jquery-confirm.min.js"></script>
+	<script src="plugins/select2/js/select2.min.js"></script>
+
+	<script src="js/common.js"></script>
+	<script>
+		var $table = $('#table');
+		$(function() {
+			$(document).on('focus', 'input[type="text"]', function() {
+				$(this).parent().find('label').addClass('active');
+			}).on('blur', 'input[type="text"]', function() {
+				if ($(this).val() == '') {
+					$(this).parent().find('label').removeClass('active');
+				}
+			});
+			// bootstrap table初始化
+			// http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+			$table.bootstrapTable({
+				url : '/hrms/user/listUser',
+				height : getHeight(),
+				striped : true,
+				search : true,
+				searchOnEnterKey : true,
+				showRefresh : true,
+				showToggle : false,
+				showColumns : true,
+				minimumCountColumns : 1,
+				showPaginationSwitch : true,
+				striped : true, //是否显示行间隔色
+				clickToSelect : true,//是否启动单机选中行
+				detailView : true,
+				detailFormatter : 'detailFormatter',
+				pagination : true,
+				paginationLoop : false,
+				classes : 'table .table-striped table-no-bordered',
+				//classes : 'table table-hover table-no-bordered',
+				//class="table .table-striped"
+				//sidePagination: 'server',
+				//silentSort: false,
+				smartDisplay : true,
+				idField : 'id',
+				sortName : 'creat_time',
+				sortOrder : 'desc',//按最新创建时间排列
+				escape : true,
+				searchOnEnterKey : true,
+				idField : 'systemId',
+				maintainSelected : true,
+				toolbar : '#toolbar',
+				columns : [ {
+					field : 'state',
+					checkbox : true,
+					align : 'center',
+				}, {
+					field : 'staff_name',
+					title : '员工姓名',
+					sortable : true,
+					align : 'left',
+				}, {
+					field : 'user_account',
+					title : '用户账号',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'user_password',
+					title : '用户账号密码',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'creat_time',
+					title : '创建时间',
+					sortable : true,
+					align : 'center',
+				}, {
+					field : 'action',
+					title : '操作',
+					halign : 'center',
+					align : 'center',
+					formatter : 'actionFormatter',
+					events : 'actionEvents',
+					clickToSelect : false
+				} ]
+			}).on('all.bs.table', function(e, name, args) {
+				$('[data-toggle="tooltip"]').tooltip();
+				$('[data-toggle="popover"]').popover();
+			});
+		});
+		function actionFormatter(value, row, index) {
+			return [ '<a id="like" class="like" href="javascript:void(0)" data-toggle="tooltip" title="添加"><i class="glyphicon glyphicon-heart"></i></a>　',
+					'<a id="edit" class="edit ml10" href="javascript:void(0)" data-toggle="tooltip" title="修改"><i class="glyphicon glyphicon-edit"></i></a>　',
+					'<a id="remove"  class="remove ml10" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="glyphicon glyphicon-remove"></i></a>' ].join('');
+		}
+
+		window.actionEvents = {
+			'click .like' : function(e, value, row, index) {
+				createAction();
+				console.log(value, row, index);
+			},
+			'click .edit' : function(e, value, row, index) {
+				updateAction();
+				console.log(value, row, index);
+			},
+			'click .remove' : function(e, value, row, index) {
+				deleteAction();
+				console.log(value, row, index);
+			}
+		};
+		function detailFormatter(index, row) {
+			var html = [];
+			$.each(row, function(key, value) {
+				html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+			});
+			return html.join('');
+		}
+
+		// 新增
+		function createAction() {
+			$.confirm({
+				type : 'dark',
+				animationSpeed : 300,
+				title : '新增账号信息',
+				content : $('#createDialog').html(),
+				buttons : {
+					confirm : {
+						text : '确认',
+						btnClass : 'waves-effect waves-button',
+						action : function() {
+							var user = {};
+							user.staff_name = this.$content.find("#staff_name").val();
+							user.user_account = this.$content.find("#user_account").val();
+							user.user_password = this.$content.find("#user_password").val();
+							$.ajax({
+								type : "POST",
+								url : "/hrms/user/addUser",
+								async : false,
+								contentType : "application/json",
+								data : JSON.stringify(user),
+								success : function(result) {
+									console.log(result);
+									if (result["msg"] == "添加成功") {
+										$.alert('添加用户账号成功');
+										location.reload();
+									} else {
+										$.alert('添加用户账号失败');
+									}
+								}
+							});
+						}
+					},
+					cancel : {
+						text : '取消',
+						btnClass : 'waves-effect waves-button'
+					}
+				}
+			});
+		}
+		// 编辑
+		function updateAction() {
+			var rows = $table.bootstrapTable('getSelections');
+			if (rows.length == 0) {
+				$.confirm({
+					title : false,
+					content : '请至少选择一条记录！',
+					autoClose : 'cancel|3000',
+					backgroundDismiss : true,
+					buttons : {
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			} else {
+				$.confirm({
+					type : 'blue',
+					animationSpeed : 300,
+					title : '编辑账号信息',
+					content : $('#createDialog').html(),
+					buttons : {
+						confirm : {
+							text : '确认',
+							btnClass : 'waves-effect waves-button',
+							action : function() {
+
+								for (var i = rows.length - 1; i >= 0; i--) {
+									var user = {};
+									user.id = rows[i].id;
+
+									if (this.$content.find("#staff_name").val() == "") {
+										user.staff_name = rows[i].staff_name;
+									} else {
+										user.staff_name = this.$content.find("#staff_name").val();
+									}
+									if (this.$content.find("#user_account").val() == "") {
+										user.user_account = rows[i].user_account
+									} else {
+										user.user_account = this.$content.find("#user_account").val();
+									}
+									if (this.$content.find("#user_password").val() == "") {
+										user.user_password = rows[i].user_password
+									} else {
+										user.user_password = this.$content.find("#user_password").val();
+									}
+
+									$.ajax({
+										type : "POST",
+										url : "/hrms/user/updateUser",
+										async : false,
+										contentType : "application/json",
+										data : JSON.stringify(user),
+										success : function(result) {
+											console.log(result);
+											if (result["msg"] == "用户修改成功") {
+												$.alert('用户修改成功');
+												setTimeout("window.location.reload()",2000);
+											} else {
+												$.alert('用户修改失败');
+											}
+
+										}
+									});
+								}
+							}
+						},
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			}
+		}
+		// 删除
+		function deleteAction() {
+			var rows = $table.bootstrapTable('getSelections');
+			if (rows.length == 0) {
+				$.confirm({
+					title : false,
+					content : '请至少选择一条记录！',
+					autoClose : 'cancel|3000',
+					backgroundDismiss : true,
+					buttons : {
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			} else {
+				$.confirm({
+					type : 'red',
+					animationSpeed : 300,
+					title : false,
+					content : '确认删除该账号信息吗？',
+					buttons : {
+						confirm : {
+							text : '确认',
+							btnClass : 'waves-effect waves-button',
+							action : function() {
+								for (var i = rows.length - 1; i >= 0; i--) {
+									var user = {};
+									user.id = rows[i].id;
+									$.ajax({
+										type : "POST",
+										url : "/hrms/user/deleteUser",
+										async : false,
+										contentType : "application/json",
+										data : JSON.stringify(user),
+										success : function(result) {
+											console.log(result);
+											if (result["msg"] == "删除成功") {
+												$.alert("删除成功");
+												location.reload();
+											} else {
+												$.alert("删除失败");
+											}
+										}
+									});
+								}
+							}
+						},
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			}
+		}
+	</script>
+	<!-- 权限管理 -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var role = sessionStorage.getItem("userRole");
+			var department = sessionStorage.getItem("userDepartment");
+			var user_account = sessionStorage.getItem("user_account");
+			if (role <3) {		
+				$("#sc").hide();
+				if(role==0){
+					$("#xz").hide();
+				}
+			}
+			
+		});
+	</script>
+</body>
+</html>

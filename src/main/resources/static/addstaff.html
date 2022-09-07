@@ -1,0 +1,340 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人力资源管理系统-入职管理</title>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css"
+	rel="stylesheet" />
+<link href="plugins/bootstrap-table-1.11.0/bootstrap-table.min.css"
+	rel="stylesheet" />
+<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet" />
+<link href="plugins/jquery-confirm/jquery-confirm.min.css"
+	rel="stylesheet" />
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<link href="css/common.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="main">
+		<div id="toolbar">
+
+			<a class="waves-effect waves-button" href="javascript:;"
+				onclick="createAction()"><i class="zmdi zmdi-plus"></i> 入职</a> <a
+				class="waves-effect waves-button" href="javascript:;"
+				onclick="deleteAction()"><i class="zmdi zmdi-plus"></i> 淘汰</a>
+
+		</div>
+		<table id="table"></table>
+	</div>
+
+
+	<div id="createDialog" class="crudDialog" hidden>
+		<form>
+			<div class="form-group">
+				<label for="input2">员工姓名</label> <input id="name" type="text"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input3">员工性别</label><br /> <br /> <br /> <input
+					type="radio" name="sex" / value="男">男&emsp; <input
+					type="radio" name="sex" / value="女">女
+
+			</div>
+			<div class="form-group">
+				<br /> <label for="input4">员工年龄</label> <input id="age" type="text"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input5">员工籍贯</label> <input id="place" type="text"
+					class="form-control">
+			</div>
+			<!-- <div class="form-group">
+				<label for="input6"></label> 员工生日<input placeholder="员工生日" id="birth"
+					type="date" class="form-control">
+			</div> -->
+			<div class="form-group">
+				<label for="input7">员工电话</label> <input id="tel" type="text"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input8">员工所属部门</label> <input id="staff_department"
+					type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input9">员工职位</label> <input id="staff_position"
+					type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="input10">员工职级</label> <input id="position_level"
+					type="text" class="form-control">
+			</div>
+		</form>
+	</div>
+
+	<script src="plugins/jquery.1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
+	<script
+		src="plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="plugins/waves-0.7.5/waves.min.js"></script>
+	<script src="plugins/jquery-confirm/jquery-confirm.min.js"></script>
+	<script src="plugins/select2/js/select2.min.js"></script>
+
+	<script src="js/common.js"></script>
+	<script>
+		var $table = $('#table');
+		$(function() {
+			$(document).on('focus', 'input[type="text"]', function() {
+				$(this).parent().find('label').addClass('active');
+			}).on('blur', 'input[type="text"]', function() {
+				if ($(this).val() == '') {
+					$(this).parent().find('label').removeClass('active');
+				}
+			});
+			// bootstrap table初始化
+			// http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+			$table.bootstrapTable({
+				url : '/hrms/interview/listIntervieweeInfo',
+				height : getHeight(),
+				striped : true,
+				search : true,
+				searchOnEnterKey : true,
+				showRefresh : true,
+				showToggle : false,
+				showColumns : true,
+				minimumCountColumns : 1,
+				showPaginationSwitch : true,
+				striped : true, //是否显示行间隔色
+				clickToSelect : true,//是否启动单机选中行
+				detailView : true,
+				detailFormatter : 'detailFormatter',
+				pagination : true,
+				paginationLoop : false,
+				classes : 'table .table-striped table-no-bordered',
+				//sidePagination: 'server',
+				//silentSort: false,
+				smartDisplay : true,
+				idField : 'id',
+				sortName : 'creat_time',
+				sortOrder : 'desc',//按最新创建时间排列
+				escape : true,
+				searchOnEnterKey : true,
+				idField : 'systemId',
+				maintainSelected : true,
+				toolbar : '#toolbar',
+				columns : [ {
+					field : 'state',
+					checkbox : true
+				}, {
+					field : 'staff_name',
+					title : '姓名',
+					sortable : true,
+					align : 'left'
+				}, {
+					field : 'age',
+					title : '年龄',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'desired_department',
+					title : '期望部门',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'desired_position',
+					title : '期望职位',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'work_experience',
+					title : '工作经历',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'work_grade',
+					title : '工作成绩',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'creat_time',
+					title : '笔试通过时间',
+					sortable : true,
+					align : 'center'
+				}, {
+					field : 'action',
+					title : '操作',
+					halign : 'center',
+					align : 'center',
+					formatter : 'actionFormatter',
+					events : 'actionEvents',
+					clickToSelect : false
+				} ]
+			}).on('all.bs.table', function(e, name, args) {
+				$('[data-toggle="tooltip"]').tooltip();
+				$('[data-toggle="popover"]').popover();
+			});
+		});
+		function actionFormatter(value, row, index) {
+			return [ '<a class="like" href="javascript:void(0)" data-toggle="tooltip" title="入职"><i class="glyphicon glyphicon-heart"></i></a>　',
+					'<a class="remove ml10" href="javascript:void(0)" data-toggle="tooltip" title="淘汰"><i class="glyphicon glyphicon-remove"></i></a>' ].join('');
+		}
+
+		window.actionEvents = {
+			'click .like' : function(e, value, row, index) {
+				//alert('You click like icon, row: ' + JSON.stringify(row));
+				createAction();
+				console.log(value, row, index);
+			},
+			'click .edit' : function(e, value, row, index) {
+				alert('请在“人事档案管理”修改员工数据！');
+				console.log(value, row, index);
+			},
+			'click .remove' : function(e, value, row, index) {
+				alert('请在“人事档案管理”删除员工数据！');
+				console.log(value, row, index);
+			}
+		};
+		function detailFormatter(index, row) {
+			var html = [];
+			$.each(row, function(key, value) {
+				html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+			});
+			return html.join('');
+		}
+
+		//新增
+		function createAction() {
+			$.confirm({
+				type : 'dark',
+				animationSpeed : 300,
+				title : '员工入职',
+				content : $('#createDialog').html(),
+				buttons : {
+					confirm : {
+						text : '确认',
+						btnClass : 'waves-effect waves-button',
+						action : function() {
+							var staff = {};
+							staff.name = this.$content.find("#name").val();
+							staff.sex = $("input[name='sex']:checked").val();
+							staff.age = this.$content.find("#age").val();
+							staff.place = this.$content.find("#place").val();
+							/* staff.birth = this.$content.find("#birth").val(); */
+							staff.tel = this.$content.find("#tel").val();
+							staff.staff_department = this.$content.find("#staff_department").val();
+							staff.staff_position = this.$content.find("#staff_position").val();
+							staff.leave_time = this.$content.find("#position_level").val();//借用一下变量 
+							console.log(staff);
+							staff.entry_time = this.$content.find("#entry_time").val();
+
+							/* staff.leave_time = this.$content
+														.find("#leave_time").val();  */
+
+							if (staff.name != null && staff.name != "" && staff.sex != null && staff.sex != "" && staff.age != null && staff.age != "" && staff.place != null
+									&& staff.place != "" /* && staff.birth != null && staff.birth != "" */&& staff.tel != null && staff.tel != ""
+									&& staff.staff_department != null && staff.staff_department != "" && staff.staff_position != null && staff.staff_position != "")
+
+							{
+								$.ajax({
+									//dataType : "",
+									async : false,
+									url : "/hrms/staff/addStaff",
+									type : "POST",
+									contentType : "application/json",
+									data : JSON.stringify(staff),
+									success : function(result) {
+										console.log(result);
+										if (result == "true") {
+											$.alert("添加成功");
+											setTimeout("window.location.reload()", 2000);
+
+										} else {
+											$.alert(result);
+										}
+
+									}
+								});
+								//$.alert("添加成功");
+
+							}
+
+							else {
+								$.alert('所有数据必须填入,不能为空！');
+								console.log(staff);
+							}
+						}
+					},
+					cancel : {
+						text : '取消',
+						btnClass : 'waves-effect waves-button'
+					}
+				}
+			});
+		}
+
+		//淘汰
+		function deleteAction() {
+			var rows = $table.bootstrapTable('getSelections');
+			if (rows.length == 0) {
+				$.confirm({
+					title : false,
+					content : '请至少选择一条记录！',
+					autoClose : 'cancel|3000',
+					backgroundDismiss : true,
+					buttons : {
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			} else {
+				$.confirm({
+					type : 'red',
+					animationSpeed : 300,
+					title : false,
+					content : '确认淘汰该候选者吗？',
+					buttons : {
+						confirm : {
+							text : '确认',
+							btnClass : 'waves-effect waves-button',
+							action : function() {
+								for (var i = rows.length - 1; i >= 0; i--) {
+									var interviewee = {};
+									interviewee.id = rows[i].id;
+									console.log(interviewee);
+									$.ajax({
+										dataType : "",
+										async : false,
+										url : "/hrms/interview/deleteIntervieweeByBoss",
+										type : "POST",
+										contentType : "application/json",
+										data : JSON.stringify(interviewee),
+										success : function(reslut) {
+											console.log(reslut);
+											$.alert(reslut);
+											location.reload();
+										}
+									});
+									$.alert("删除了" + rows.length + "条数据");
+								}
+
+							}
+						},
+						cancel : {
+							text : '取消',
+							btnClass : 'waves-effect waves-button'
+						}
+					}
+				});
+			}
+		}
+	</script>
+</body>
+</html>

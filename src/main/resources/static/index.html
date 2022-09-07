@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人力资源管理系统-首页</title>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<link href="plugins/fullPage/jquery.fullPage.css" rel="stylesheet" />
+<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css"
+	rel="stylesheet" />
+<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet" />
+<link
+	href="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css"
+	rel="stylesheet" />
+<link href="css/admin.css" rel="stylesheet" />
+<style>
+/** skins **/
+#zheng-upms-server #header {
+	background: #29A176;
+}
+
+#zheng-upms-server .content_tab {
+	background: #29A176;
+}
+
+#zheng-upms-server .s-profile>a {
+	background: url(images/zheng-upms.png) left top no-repeat;
+}
+
+#zheng-cms-admin #header {
+	background: #455EC5;
+}
+
+#zheng-cms-admin .content_tab {
+	background: #455EC5;
+}
+
+#zheng-cms-admin .s-profile>a {
+	background: url(images/zheng-cms.png) left top no-repeat;
+}
+
+#zheng-pay-admin #header {
+	background: #F06292;
+}
+
+#zheng-pay-admin .content_tab {
+	background: #F06292;
+}
+
+#zheng-pay-admin .s-profile>a {
+	background: url(images/zheng-pay.png) left top no-repeat;
+}
+
+#zheng-ucenter-home #header {
+	background: #6539B4;
+}
+
+#zheng-ucenter-home .content_tab {
+	background: #6539B4;
+}
+
+#zheng-ucenter-home .s-profile>a {
+	background: url(images/zheng-ucenter.png) left top no-repeat;
+}
+
+#zheng-oss-web #header {
+	background: #0B8DE5;
+}
+
+#zheng-oss-web .content_tab {
+	background: #0B8DE5;
+}
+
+#zheng-oss-web .s-profile>a {
+	background: url(images/zheng-oss.png) left top no-repeat;
+}
+
+#test #header {
+	background: test;
+}
+
+#test .content_tab {
+	background: test;
+}
+
+#test .s-profile>a {
+	background: url(test) left top no-repeat;
+}
+</style>
+</head>
+<body>
+	<header id="header">
+		<ul id="menu">
+			<li id="guide" class="line-trigger">
+				<div class="line-wrap">
+					<div class="line top"></div>
+					<div class="line center"></div>
+					<div class="line bottom"></div>
+				</div>
+			</li>
+			<li id="logo" class="hidden-xs"><a href="index.html"> <img
+					src="images/logo.png" />
+			</a> <span id="system_title">人力资源管理系统</span></li>
+			<li class="pull-right">
+				<ul class="hi-menu">
+
+					<li class="dropdown"><a class="waves-effect waves-light"
+						data-toggle="dropdown" href="javascript:;"> <i
+							class="him-icon zmdi zmdi-dropbox"></i>
+					</a>
+						<ul class="dropdown-menu dm-icon pull-right">
+
+							<li class="skin-switch">请选择背景</li>
+							<li class="divider"></li>
+							<li><a class="waves-effect switch-systems" systemid="1"
+								systemname="zheng-upms-server"><i
+									class="glyphicon glyphicon-chevron-right"></i> 绿色清新</a></li>
+
+							<li><a class="waves-effect switch-systems" systemid="1"
+								systemname="zheng-cms-admin" systemtitle="人力资源管理系统"><i
+									class="glyphicon glyphicon-chevron-right"></i> 蓝色商务</a></li>
+
+							<li><a class="waves-effect switch-systems" systemid="1"
+								systemname="zheng-pay-admin" systemtitle="人力资源管理系统"><i
+									class="glyphicon glyphicon-chevron-right"></i> 粉色少女</a></li>
+
+							<li><a class="waves-effect switch-systems" systemid="1"
+								systemname="zheng-ucenter-home" systemtitle="人力资源管理系统"><i
+									class="glyphicon glyphicon-chevron-right"></i> 紫色迷人</a></li>
+
+							<li><a class="waves-effect switch-systems" systemid="1"
+								systemname="zheng-oss-web" systemtitle="人力资源管理系统"><i
+									class="glyphicon glyphicon-chevron-right"></i> 浅蓝活泼</a></li>
+						</ul></li>
+					<li class="dropdown"><a class="waves-effect waves-light"
+						data-toggle="dropdown" href="javascript:;"> <i
+							class="him-icon zmdi zmdi-more-vert"></i>
+					</a>
+						<ul class="dropdown-menu dm-icon pull-right">
+							<li class="hidden-xs"><a class="waves-effect"
+								data-ma-action="fullscreen" href="javascript:fullPage();"><i
+									class="zmdi zmdi-fullscreen"></i> 全屏模式</a></li>
+							<li><a class="waves-effect"
+								href="/hrms/user/logout"><i
+									class="zmdi zmdi-run"></i> 退出登录</a></li>
+						</ul></li>
+				</ul>
+			</li>
+		</ul>
+	</header>
+	<section id="main">
+		<!-- 左侧导航区 -->
+		<aside id="sidebar">
+			<!-- 个人资料区 -->
+			<div class="s-profile">
+				<a class="waves-effect waves-light" href="javascript:;">
+					<div class="sp-pic">
+						<img src="images/avatar.jpg" />
+					</div>
+					<div id="welcome" class="sp-info">
+						<!-- 您好，欢迎来到人力资源管理系统！ -->
+						<i class="zmdi zmdi-caret-down"></i>
+					</div>
+				</a>
+				<ul class="main-menu">
+					<li><a class="waves-effect"
+						href="/hrms/user/logout"><i
+							class="zmdi zmdi-run"></i> 退出登录</a></li>
+				</ul>
+			</div>
+			<!-- /个人资料区 -->
+			<!-- 菜单区 -->
+			<ul class="main-menu">
+				<li><a class="waves-effect"
+					href="javascript:Tab.addTab('首页', 'home');"><i
+						class="zmdi zmdi-home"></i> 首页</a></li>
+				<li class="sub-menu system_menus system_1 0" id="jggl"><a
+					class="waves-effect" href="javascript:;"><i
+						class="zmdi zmdi-accounts-list"></i> 机构管理</a>
+					<ul>
+						<li><a class="waves-effect"
+							href="javascript:Tab.addTab('部门管理', 'department.html');">部门管理</a></li>
+						<li><a class="waves-effect"
+							href="javascript:Tab.addTab('职位管理', 'position.html');">职位管理</a></li>
+					</ul></li>
+				<li class="sub-menu system_menus system_1 3"><a
+					class="waves-effect" href="javascript:;"><i
+						class="zmdi zmdi-accounts"></i> 常用业务</a>
+					<ul>
+						<li id="rzgl" style="display:"><a class="waves-effect"
+							href="javascript:Tab.addTab('入职管理', 'addstaff.html');">入职管理</a></li>
+						<li id="rsdagl"><a class="waves-effect"
+							href="javascript:Tab.addTab('人事档案管理', 'staff.html');">人事档案管理</a></li>
+						<li id="rckgl"><a class="waves-effect"
+							href="javascript:Tab.addTab('人才库管理', 'staffdata.html');">人才库管理</a></li>
+						<li><a class="waves-effect"
+							href="javascript:Tab.addTab('求职者管理', 'interviewee.html');">求职者管理</a></li>
+					</ul></li>
+				<li id="yhgl" class="sub-menu system_menus system_1 6"><a
+					class="waves-effect" href="javascript:;"><i
+						class="zmdi zmdi-lock-outline"></i> 用户管理</a>
+					<ul>
+						<li id="yhzhgl"><a class="waves-effect"
+							href="javascript:Tab.addTab('用户管理', 'user.html');">用户账号管理</a></li>
+						<li id="yhqxgl"><a class="waves-effect"
+							href="javascript:Tab.addTab('权限管理', 'role.html');">用户权限管理</a></li>
+					</ul></li>
+				<li class="sub-menu system_menus system_1 7"><a
+					class="waves-effect" href="javascript:;"><i
+						class="zmdi zmdi-more"></i> 公告管理</a>
+					<ul>
+						<li><a class="waves-effect"
+							href="javascript:Tab.addTab('制度公告', 'file.html');">通知公告</a></li>
+					</ul></li>
+
+				<div class="upms-version">
+
+
+					<div class="upms-version">&copy; GROUP-SEVEN V1.0</div>
+
+					</li>
+			</ul>
+			<!-- /菜单区 -->
+		</aside>
+		<!-- /左侧导航区 -->
+		<section id="content">
+			<div class="content_tab">
+				<div class="tab_left">
+					<a class="waves-effect waves-light" href="javascript:;"><i
+						class="zmdi zmdi-chevron-left"></i></a>
+				</div>
+				<div class="tab_right">
+					<a class="waves-effect waves-light" href="javascript:;"><i
+						class="zmdi zmdi-chevron-right"></i></a>
+				</div>
+				<ul id="tabs" class="tabs">
+					<li id="tab_home" data-index="home" data-closeable="false"
+						class="cur"><a class="waves-effect waves-light">首页</a></li>
+				</ul>
+			</div>
+			<div class="content_main">
+				<div id="iframe_home" class="iframe cur">
+					<p>
+					<h4>人力资源管理系统</h4>
+					</p>
+					<!-- <p><b>演示地址</b>：<a href="http://localhost/hrms/login.html" target="_blank">登录</a></p> -->
+					<br /> <br />
+					<p>
+					<h4>系统功能概述：</h4>
+					</p>
+					<p>
+						<b>机构管理</b>：总经理对公司组织机构（部门、职位）的增、删、改、查。
+					</p>
+					<p>
+						<b>日常业务</b>：入职管理、人事档案管理、人才库管理、求职者管理等功能的增、删、改、查。
+					</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;●其他部门员工登录时提示无权限使用该系统。只有总经理和隶属人事部的人员才能使用。</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;●入职管理：即为面试，只有总经理才能决定面试结果。</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;●人事档案管理：即为员工信息的增删改查，修改职位同时会更新员工的账号权限。</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;●人才库管理：离职员工不会真正删除，也会存到人才库中。</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;●求职者管理即为初次求职者信息的录入，进行笔试，通过笔试的人才可以推荐前往面试（面试由总经理进行）。</p>
+					<p>&emsp;&emsp;&emsp;&emsp;&emsp;★上述各业务依据人事部员工职位的不同而具有不同的增删改权限。</p>
+					<p>
+						<b>用户管理</b>：总经理和人事部经理对用户账号的增删改查功能。
+					</p>
+					<p>
+						<b>权限管理</b>：用户权限通过更改员工职位来修改。
+					</p>
+					<p>
+						<b>制度文件(公告)管理</b>：制度文件与通知公告的增、删、改、查。权限会根据职位有所不同。
+					</p>
+					<br /> <br />
+					<p>
+					<h4>项目开发历程：</h4>
+					  ★在软件工程2002班第七小组每一位成员的不懈努力下，本项目开发终于告一段落。。。
+
+					</p>
+				</div>
+			</div>
+		</section>
+	</section>
+	<footer id="footer"></footer>
+	<script src="plugins/jquery.1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="plugins/waves-0.7.5/waves.min.js"></script>
+	<script
+		src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="plugins/BootstrapMenu.min.js"></script>
+	<script src="plugins/device.min.js"></script>
+	<script src="plugins/fullPage/jquery.fullPage.min.js"></script>
+	<script src="plugins/fullPage/jquery.jdirk.min.js"></script>
+	<script src="plugins/jquery.cookie.js"></script>
+	<script src="js/admin.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var role = sessionStorage.getItem("userRole");
+			var department = sessionStorage.getItem("userDepartment");
+			var user_account = sessionStorage.getItem("user_account");
+			console.log(role + "," + department);
+			$("#welcome").html("您好 " + user_account + "，欢迎来到本系统！");
+
+		});
+	</script>
+	<!-- 权限管理 -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var role = sessionStorage.getItem("userRole");
+			var department = sessionStorage.getItem("userDepartment");
+			var user_account = sessionStorage.getItem("user_account");
+			if (user_account == null) {
+				user_account = "";
+				alert("请先登录！")
+				$(location).attr('href', '/hrms/login.html');
+				return;
+			}
+			if (role != 3) {
+				$("#jggl").hide();
+				$("#rzgl").hide();
+				$("#yhqxgl").hide();
+				if(role<2){
+					$("#yhgl").hide();
+				}
+				if(role==0){
+					$("#xz").hide();
+					$("#rsdagl").hide();
+					$("#rckgl").hide();
+				}
+			}
+			
+		});
+	</script>
+</body>
+</html>

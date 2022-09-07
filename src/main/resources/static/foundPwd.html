@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人力资源管理-找回密码</title>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<!-- <base href="/hrms/static"> -->
+<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css"
+	rel="stylesheet" />
+<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet" />
+<link href="plugins/checkbix/css/checkbix.min.css" rel="stylesheet" />
+<link href="css/login.css" rel="stylesheet" />
+<script type="text/javascript">
+	function validate() {
+
+		var pwd1 = $("#user_password").val();
+		var pwd2 = $("#user_password2").val();
+		//var yzm= document.getElementById("yzm").value;
+		/* 对比两次输入的密码  */
+
+		if (pwd1 == pwd2) {
+			document.getElementById("tishi").innerHTML = "<font color='green'>密码输入一致</font>";
+			document.getElementById("login-bt").disabled = false;
+		} else {
+			document.getElementById("tishi").innerHTML = "<font color='red'>两次密码输入不一致</font>";
+			document.getElementById("login-bt").disabled = true;
+		}
+	}
+
+	// 注册登录
+	function foundPwd() {
+		var user = {};
+		user.user_account = $("#user_account").val();
+		user.staff_name = $("#staff_name").val();
+		user.user_password = $("#user_password").val();
+		if(user.user_password==""||user.user_password==null){
+			alert("新密码不能为空！");
+			return false;
+		}
+		$.ajax({
+			type : "POST",
+			url : "/hrms/user/foundPwd",
+			async : true,
+			contentType : "application/json",
+			data : JSON.stringify(user),
+			success : function(result) {
+				console.log(result);
+				if (result == "修改成功") {
+					alert("密码重置成功！");
+					$(location).attr('href', 'http://localhost/hrms/login.html');
+				} else if (result == "公司无此员工")
+					alert(result);
+				else {
+					alert("重置失败！");
+				}
+
+			}
+
+		});
+	}
+</script>
+</head>
+<body>
+
+	<div id="login-window">
+		<center>
+			<h3>人力资源管理系统-密码重置</h3>
+		</center>
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+			<div class="fg-line">
+				<input id="user_account" type="text" required="required"
+					class="form-control" name="user_account" placeholder="帐号">
+			</div>
+		</div>
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+			<div class="fg-line">
+				<input id="staff_name" type="text" required="required"
+					class="form-control" name="staff_name" placeholder="员工姓名">
+			</div>
+		</div>
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-female"></i></span>
+			<div class="fg-line">
+				<input id="user_password" type="password" required="required"
+					class="form-control" name="user_password"
+					onkeyup="javascript:validate()" placeholder="请输入新密码">
+			</div>
+		</div>
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-female"></i></span>
+			<div class="fg-line">
+				<input id="user_password2" type="password" class="form-control"
+					name="user_password" onkeyup="javascript:validate()"
+					placeholder="再次输入密码">
+				<div id="tishi">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<a id="login-bt" href="javascript:foundPwd();"
+			class="waves-effect waves-button waves-float"><i
+			class="zmdi zmdi-arrow-forward"></i></a>
+	</div>
+	<script src="plugins/jquery.1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="plugins/waves-0.7.5/waves.min.js"></script>
+	<script src="plugins/checkbix/js/checkbix.min.js"></script>
+	<script type="text/javascript">
+		Checkbix.init();
+	</script>
+</body>
+</html>

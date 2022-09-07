@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xpu.hrms.mapper.IDbUserMapper">
+	<!-- 总经理查询语句 -->
+	<select id="listUser" resultType="DbUser">
+		SELECT
+		u.id,
+		u.staff_name,
+		u.user_account,
+		u.user_password,
+		u.role_id,
+		creat_time
+		FROM
+		db_user u where
+		u.role_id !='3'
+	</select>
+	<!-- 经理查询语句 -->
+	<!-- <select id="listUserByDepartment" resultType="DbUser"> SELECT u.id, 
+		u.staff_name, u.user_account, u.user_password, u.role_id, creat_time FROM 
+		db_user u WHERE u.id in ( SELECT id FROM db_staff WHERE db_staff.staff_department= 
+		#{dep}) </select> -->
+	<!-- 主管查询语句 -->
+	<!-- <select id="listUserByZhuGuan" resultType="DbUser"> SELECT u.id, u.staff_name, 
+		u.user_account, u.user_password, u.role_id, creat_time FROM db_user u WHERE 
+		u.id IN ( SELECT id FROM db_staff WHERE db_staff.staff_department= #{staff_department} 
+		) AND ( u.role_id= 1 OR u.role_id= 0 ); </select> -->
+	<select id="listUserRole" resultType="java.util.Map">
+		SELECT
+		db_user.id uid,
+		db_user.staff_name,
+		db_user.user_account,
+		db_user.role_id,
+		db_department.department_name,
+		db_position.position,
+		db_position.position_level
+		FROM
+		db_user,
+		db_staff,
+		db_department,
+		db_position
+		WHERE
+		db_user.id= db_staff.id
+		AND db_department.id=
+		db_staff.staff_department
+		AND db_position.id= db_staff.staff_position;
+	</select>
+	<!-- 查询语句；判断是否存在用户 -->
+	<select id="loginByUserNameAndPassword" resultType="DbUser">
+		SELECT *
+		FROM
+		db_user WHERE user_account=#{user_account} AND
+		user_password=#{user_password}
+	</select>
+	<!-- 查询语句；展示待面试的员工 -->
+	<select id="listUserForAddStaff" resultType="DbUser">
+		SELECT
+		*
+		FROM
+		db_user
+		WHERE
+		id NOT IN ( SELECT id FROM db_staff )
+		AND id != '1000';
+	</select>
+	<!-- 查询该账号是否已经被注册 -->
+	<select id="selectUserByUserAccount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		db_user
+		WHERE
+		user_account = #{user_account};
+	</select>
+	<!-- 根据id查询账户全信息 -->
+	<select id="selectUserById" resultType="DbUser">
+		SELECT
+		*
+		FROM
+		db_user
+		WHERE
+		id = #{id};
+	</select>
+	<!-- 根据输入的账号名和员工名来查询账户全信息 -->
+	<select id="selectUserByUserAccountInfo" resultType="DbUser">
+		SELECT
+		*
+		FROM
+		db_user
+		WHERE
+		staff_name = #{staff_name} and
+		user_account=#{user_account};
+	</select>
+	<!-- 插入语句 用户权限初始为0 -->
+	<insert id="addUser">
+		INSERT INTO db_user
+		VALUES(#{id},#{staff_name},#{user_account},#{user_password},#{creat_time},0);
+	</insert>
+	<!-- 更新语句 -->
+	<update id="updateUser">
+		UPDATE db_user SET
+		staff_name=#{staff_name},user_account=#{user_account},user_password=#{user_password}
+		WHERE id=#{id};
+	</update>
+	<!-- 更新语句 -->
+	<update id="updateUserPwd">
+		UPDATE db_user SET
+		user_password=#{user_password}
+		WHERE staff_name=#{staff_name} and user_account=#{user_account};
+	</update>
+	<update id="updateUserRoleById">
+		UPDATE db_user SET role_id = #{role} WHERE id =#{id};
+	</update>
+	<!-- 删除语句 -->
+	<delete id="deleteUser">
+		delete from db_user
+		WHERE id=#{id};
+	</delete>
+</mapper>

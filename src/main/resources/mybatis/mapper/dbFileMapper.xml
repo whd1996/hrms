@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xpu.hrms.mapper.IDbFileMapper">
+	<!--查询语句 -->
+	<select id="listFile" resultType="DbFile">
+		SELECT
+		db_file.id,
+		db_file.file_name,
+		db_file.file_content,
+		db_file.post_time,
+		db_file.post_staff
+		FROM
+		db_file
+	</select>
+	<!--添加语句 -->
+	<insert id="addFile">
+		insert into db_file
+		values(#{id},#{file_name},#{file_content},#{post_time},#{post_staff})
+	</insert>
+
+	<!-- 根据ID查询信息 -->
+	<select id="getFileByID" resultType="DbFile">
+		SELECT * FROM
+		db_file WHERE id=#{id}
+	</select>
+
+	<!-- 更新语句 -->
+	<update id="updateFile">
+		UPDATE db_file SET
+		file_content=#{file_content} WHERE
+		id=#{id}
+	</update>
+
+	<!-- 删除语句，根据员工ID删除 -->
+	<update id="deleteFile">
+		delete from db_file where id=#{id}
+	</update>
+</mapper>

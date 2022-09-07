@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xpu.hrms.mapper.IDbStaffMapper">
+
+	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
+	<select id="listStaff" resultType="java.util.Map">
+		SELECT
+		s.id,
+		s.name,
+		s.sex,
+		s.age,
+		s.place,
+		s.birth,
+		s.tel,
+		s.entry_time,
+		dp.department_name,
+		p.position,
+		p.position_level,
+		dp.duty,
+		p.position_salary
+		FROM
+		db_staff s,
+		db_position p,
+		db_department dp
+		WHERE
+		dp.id= s.staff_department
+		AND
+		p.id=s.staff_position and s.isdelete=0;
+	</select>
+	<select id="listStaffData" resultType="java.util.Map">
+		SELECT
+		s.id,
+		s.name,
+		s.sex,
+		s.age,
+		s.place,
+		s.birth,
+		s.tel,
+		s.entry_time,
+		s.leave_time,
+		s.isdelete,
+		dp.department_name,
+		p.position,
+		p.position_salary
+		FROM
+		db_staff s,
+		db_position p,
+		db_department dp
+		WHERE
+		dp.id= s.staff_department
+		AND
+		p.id=s.staff_position;
+	</select>
+	<select id="listLeaveStaff" resultType="DbStaff">
+		select
+		st.id,st.name,
+		st.sex,st.age,
+		st.place,st.birth,
+		st.tel,st.staff_department,
+		st.staff_position,st.entry_time,
+		st.leave_time
+		from
+		db_staff st where
+		st.name=#{name};
+	</select>
+	<select id="selectStaffByDeptInfo" resultType="DbStaff">
+		SELECT
+		*
+		FROM
+		db_staff
+		WHERE
+		staff_department IN ( SELECT dp.id FROM db_department dp
+		WHERE dp.department_name=
+		#{dpname} AND dp.position = #{pname} );
+	</select>
+	<select id="selectStaffByPositionInfo" resultType="DbStaff">
+		SELECT
+		*
+		FROM
+		db_staff
+		WHERE
+		staff_position IN ( SELECT p.id FROM db_position p WHERE
+		p.position =#{position} AND
+		p.position_level = #{position_level});
+	</select>
+	<!-- 主管查询语句 -->
+	<select id="listStaffByZhuGuan" resultType="DbStaff">
+		SELECT
+		st.id,
+		st.name,
+		st.sex,
+		st.age,
+		st.place,
+		st.birth,
+		st.tel,
+		st.staff_department,
+		st.staff_position,
+		st.entry_time,
+		st.leave_time
+		FROM
+		db_staff st
+		WHERE
+		st.id IN ( SELECT u.id FROM db_user u WHERE ( u.role_id = 1 OR
+		u.role_id= 0
+		) )
+		AND st.staff_department= #{staff_department} and
+		st.isdelete=0;
+	</select>
+	<!-- 经理查询员工语句 -->
+	<select id="listStaffByDepartment" resultType="DbStaff">
+		SELECT
+		st.id,
+		st.name,
+		st.sex,
+		st.age,
+		st.place,
+		st.birth,
+		st.tel,
+		st.staff_department,
+		st.staff_position,
+		st.entry_time,
+		st.leave_time
+		FROM
+		db_staff st
+		WHERE
+		st.id IN ( SELECT u.id FROM db_user u WHERE (
+		u.role_id !=3
+		) )
+		AND
+		st.staff_department= #{staff_department};
+	</select>
+	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
+	<select id="selectStaffById" resultType="DbStaff">
+		select
+		st.id,st.name,
+		st.sex,st.age,
+		st.place,st.birth,
+		st.tel,st.staff_department,
+		st.staff_position,st.entry_time,
+		st.leave_time
+		from
+		db_staff st where
+		st.isdelete=0 and st.id=#{id};
+	</select>
+
+	<!-- 查询语句；获取所有员工记录 -->
+	<select id="getStaffCount" resultType="int">
+		select COUNT(*) from
+		db_staff
+	</select>
+
+	<!-- 插入语句 -->
+	<insert id="addStaff">
+		INSERT INTO db_staff
+		VALUES(#{st.id},#{st.name},
+		#{st.sex},#{st.age},#{st.place},
+		#{st.birth},#{st.tel},#{st.staff_department},#{st.staff_position},
+		#{st.entry_time},#{st.leave_time},0)
+	</insert>
+
+	<!-- 更新语句 -->
+	<update id="updateStaff">
+		update db_staff
+		<set>
+			<if test="name != null and name != ''">
+				name = #{name},
+			</if>
+
+			<if test="sex != null and sex != ''">
+				sex = #{sex},
+			</if>
+
+			<if test="age != null and age != ''">
+				age = #{age},
+			</if>
+
+			<if test="place != null and place != ''">
+				place = #{place},
+			</if>
+
+			<if test="birth != null and birth != ''">
+				birth = #{birth},
+			</if>
+
+			<if test="tel != null and tel != ''">
+				tel = #{tel},
+			</if>
+
+			<if test="staff_department != null and staff_department != ''">
+				staff_department =#{staff_department},
+			</if>
+
+			<if test="staff_position != null and staff_position != ''">
+				staff_position = #{staff_position},
+			</if>
+			<if test="leave_time != null and leave_time != ''">
+				leave_time = #{leave_time},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 删除语句，根据员工ID删除 -->
+	<update id="deleteStaff">
+		update db_staff set leave_time=#{leave_time},isdelete
+		= '1' WHERE id=#{id};
+	</update>
+	<delete id="deleteStaffData">
+		delete from db_staff where id=#{id};
+	</delete>
+</mapper>
