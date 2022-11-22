@@ -14,7 +14,6 @@
 
  Date: 02/07/2022 19:11:47
 */
-
 CREATE DATABASE xpu_hrms;
 USE xpu_hrms;
 -- ----------------------------
@@ -354,5 +353,5 @@ ALTER TABLE [dbo].[db_staff] ADD CONSTRAINT [FK__db_staff__staff___7C1A6C5A] FOR
     GO
 
 ALTER TABLE [dbo].[db_staff] ADD CONSTRAINT [FK__db_staff__id__7D0E9093] FOREIGN KEY ([id]) REFERENCES [dbo].[db_user] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
-    GO
+    Go
 
