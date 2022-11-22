@@ -7,13 +7,18 @@
 		db_interviewee;
 	</select>
 
-	<select id="listIntervieweeInfo" resultType="java.util.Map">
-		SELECT
-		u.id,u.staff_name,i.age,i.desired_department,i.desired_position,i.work_experience,i.work_grade,u.creat_time
-		FROM
-		db_user u,
-		db_interviewee i
-		where i.id= u.id;
+	<select id="listIntervieweeInfo" resultType="java.util.HashMap">
+		SELECT u.id,
+			   u.staff_name,
+			   i.age,
+			   i.desired_department,
+			   i.desired_position,
+			   i.work_experience,
+			   i.work_grade,
+			   u.creat_time
+		FROM db_user u,
+			 db_interviewee i
+		where i.id = u.id;
 	</select>
 	<select id="selectIntervieweeById" resultType="com.xpu.hrms.entity.DbInterviewee">
 		SELECT

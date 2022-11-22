@@ -16,9 +16,9 @@ import java.sql.SQLException;
 
 /**
  * 配置数据源
- * @Primary 标识为主数据源；主数据源只能有一个
- * @author dzhw
  *
+ * @author whd
+ * @Primary 标识为主数据源；主数据源只能有一个
  */
 @Configuration  
 @MapperScan(basePackages = "com.xpu.hrms.mapper", sqlSessionTemplateRef = "sqlSessionTemplate")

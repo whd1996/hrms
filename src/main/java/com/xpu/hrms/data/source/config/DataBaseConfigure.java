@@ -5,13 +5,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * 配置文件属性; 从配置文件中取值注入/src/main/resources/application.properties
- * 
- * @ConfigurationProperties不会创建bean，所以要加上其他注解交给spring容器管理；如@Component
- * @author dzhw
  *
+ * @author whd
+ * @ConfigurationProperties不会创建bean，所以要加上其他注解交给spring容器管理；如@Component
  */
 @Component
-@ConfigurationProperties(prefix = "sqlserver.datasource.hrms")
+@ConfigurationProperties(prefix = "mysql.datasource.hrms")
 public class DataBaseConfigure {
 	private String driverClassName;
 	private String url;
