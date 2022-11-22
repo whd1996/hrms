@@ -3,7 +3,7 @@
 <mapper namespace="com.xpu.hrms.mapper.IDbStaffMapper">
 
 	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
-	<select id="listStaff" resultType="java.util.Map">
+	<select id="listStaff" resultType="java.util.HashMap">
 		SELECT
 		s.id,
 		s.name,
@@ -27,7 +27,7 @@
 		AND
 		p.id=s.staff_position and s.isdelete=0;
 	</select>
-	<select id="listStaffData" resultType="java.util.Map">
+	<select id="listStaffData" resultType="java.util.HashMap">
 		SELECT
 		s.id,
 		s.name,
@@ -51,7 +51,7 @@
 		AND
 		p.id=s.staff_position;
 	</select>
-	<select id="listLeaveStaff" resultType="DbStaff">
+	<select id="listLeaveStaff" resultType="com.xpu.hrms.entity.DbStaff">
 		select
 		st.id,st.name,
 		st.sex,st.age,
@@ -63,7 +63,7 @@
 		db_staff st where
 		st.name=#{name};
 	</select>
-	<select id="selectStaffByDeptInfo" resultType="DbStaff">
+	<select id="selectStaffByDeptInfo" resultType="com.xpu.hrms.entity.DbStaff">
 		SELECT
 		*
 		FROM
@@ -73,7 +73,7 @@
 		WHERE dp.department_name=
 		#{dpname} AND dp.position = #{pname} );
 	</select>
-	<select id="selectStaffByPositionInfo" resultType="DbStaff">
+	<select id="selectStaffByPositionInfo" resultType="com.xpu.hrms.entity.DbStaff">
 		SELECT
 		*
 		FROM
@@ -84,7 +84,7 @@
 		p.position_level = #{position_level});
 	</select>
 	<!-- 主管查询语句 -->
-	<select id="listStaffByZhuGuan" resultType="DbStaff">
+	<select id="listStaffByZhuGuan" resultType="com.xpu.hrms.entity.DbStaff">
 		SELECT
 		st.id,
 		st.name,
@@ -107,7 +107,7 @@
 		st.isdelete=0;
 	</select>
 	<!-- 经理查询员工语句 -->
-	<select id="listStaffByDepartment" resultType="DbStaff">
+	<select id="listStaffByDepartment" resultType="com.xpu.hrms.entity.DbStaff">
 		SELECT
 		st.id,
 		st.name,
@@ -130,7 +130,7 @@
 		st.staff_department= #{staff_department};
 	</select>
 	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
-	<select id="selectStaffById" resultType="DbStaff">
+	<select id="selectStaffById" resultType="com.xpu.hrms.entity.DbStaff">
 		select
 		st.id,st.name,
 		st.sex,st.age,

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xpu.hrms.mapper.IDbDepartmentMapper">
 	<!-- 查询语句 -->
-	<select id="listDepartment" resultType="DbDepartment">
+	<select id="listDepartment" resultType="com.xpu.hrms.entity.DbDepartment">
 		SELECT
 		d.id,d.department_name,d.position,d.duty FROM db_department d;
 	</select>
@@ -12,12 +12,12 @@
 		count(*) FROM db_department where position=#{position};
 	</select>
 	<!-- 查询语句 -->
-	<select id="selectDepartmentById" resultType="DbDepartment">
+	<select id="selectDepartmentById" resultType="com.xpu.hrms.entity.DbDepartment">
 		SELECT * FROM
 		db_department where id=#{id};
 	</select>
 	<!-- 查询语句 -->
-	<select id="selectDpByPAndDP" resultType="DbDepartment">
+	<select id="selectDpByPAndDP" resultType="com.xpu.hrms.entity.DbDepartment">
 		SELECT * from
 		db_department where position=#{p} and department_name=#{dp};
 	</select>

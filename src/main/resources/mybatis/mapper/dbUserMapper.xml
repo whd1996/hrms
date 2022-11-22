@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xpu.hrms.mapper.IDbUserMapper">
 	<!-- 总经理查询语句 -->
-	<select id="listUser" resultType="DbUser">
+	<select id="listUser" resultType="com.xpu.hrms.entity.DbUser">
 		SELECT
 		u.id,
 		u.staff_name,
@@ -45,14 +45,14 @@
 		AND db_position.id= db_staff.staff_position;
 	</select>
 	<!-- 查询语句；判断是否存在用户 -->
-	<select id="loginByUserNameAndPassword" resultType="DbUser">
+	<select id="loginByUserNameAndPassword" resultType="com.xpu.hrms.entity.DbUser">
 		SELECT *
 		FROM
 		db_user WHERE user_account=#{user_account} AND
 		user_password=#{user_password}
 	</select>
 	<!-- 查询语句；展示待面试的员工 -->
-	<select id="listUserForAddStaff" resultType="DbUser">
+	<select id="listUserForAddStaff" resultType="com.xpu.hrms.entity.DbUser">
 		SELECT
 		*
 		FROM
@@ -70,7 +70,7 @@
 		user_account = #{user_account};
 	</select>
 	<!-- 根据id查询账户全信息 -->
-	<select id="selectUserById" resultType="DbUser">
+	<select id="selectUserById" resultType="com.xpu.hrms.entity.DbUser">
 		SELECT
 		*
 		FROM
@@ -79,7 +79,7 @@
 		id = #{id};
 	</select>
 	<!-- 根据输入的账号名和员工名来查询账户全信息 -->
-	<select id="selectUserByUserAccountInfo" resultType="DbUser">
+	<select id="selectUserByUserAccountInfo" resultType="com.xpu.hrms.entity.DbUser">
 		SELECT
 		*
 		FROM

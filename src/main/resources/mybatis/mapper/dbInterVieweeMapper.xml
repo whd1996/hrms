@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xpu.hrms.mapper.IDbIntervieweeMapper">
 	<!-- 查询语句 -->
-	<select id="listInterviewee" resultType="DbInterviewee">
+	<select id="listInterviewee" resultType="com.xpu.hrms.entity.DbInterviewee">
 		SELECT * from
 		db_interviewee;
 	</select>
@@ -15,7 +15,7 @@
 		db_interviewee i
 		where i.id= u.id;
 	</select>
-	<select id="selectIntervieweeById" resultType="DbInterviewee">
+	<select id="selectIntervieweeById" resultType="com.xpu.hrms.entity.DbInterviewee">
 		SELECT
 		* from
 		db_interviewee i

@@ -1,6 +1,7 @@
 package com.xpu.hrms.mapper;
 
 import com.xpu.hrms.entity.DbPosition;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public interface PositionMapper {
 	public int deletePosition(String id);
 
 	public int updatePosition(DbPosition dbposition);
-	
-	public DbPosition selectPositionByPositionNameAndLevel(String positionName,String position_level);
+
+	public DbPosition selectPositionByPositionNameAndLevel(@Param("positionName") String positionName, @Param("position_level") String position_level);
 
 }

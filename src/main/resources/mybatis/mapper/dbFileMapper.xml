@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xpu.hrms.mapper.IDbFileMapper">
 	<!--查询语句 -->
-	<select id="listFile" resultType="DbFile">
+	<select id="listFile" resultType="com.xpu.hrms.entity.DbFile">
 		SELECT
 		db_file.id,
 		db_file.file_name,
@@ -19,7 +19,7 @@
 	</insert>
 
 	<!-- 根据ID查询信息 -->
-	<select id="getFileByID" resultType="DbFile">
+	<select id="getFileByID" resultType="com.xpu.hrms.entity.DbFile">
 		SELECT * FROM
 		db_file WHERE id=#{id}
 	</select>

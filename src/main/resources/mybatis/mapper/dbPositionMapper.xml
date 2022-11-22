@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xpu.hrms.mapper.PositionMapper">
 	<!-- 查询语句 -->
-	<select id="listPosition" resultType="DbPosition">
+	<select id="listPosition" resultType="com.xpu.hrms.entity.DbPosition">
 		SELECT * from
 		db_position;
 	</select>
 	<!-- 查询语句 -->
 	<select id="selectPositionByPositionNameAndLevel"
-		resultType="DbPosition">
+		resultType="com.xpu.hrms.entity.DbPosition">
 		SELECT * from
 		db_position where position=#{positionName} and position_level=#{position_level};
 	</select>

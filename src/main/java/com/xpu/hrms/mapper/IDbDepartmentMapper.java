@@ -1,6 +1,7 @@
 package com.xpu.hrms.mapper;
 
 import com.xpu.hrms.entity.DbDepartment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface IDbDepartmentMapper {
 
 	int selectDpPositionByPositionName(String position);
 
-	DbDepartment selectDpByPAndDP(String dp, String p);
+	DbDepartment selectDpByPAndDP(@Param("dp") String dp, @Param("p") String p);
 }

@@ -46,6 +46,7 @@ public class FileController {
 	@ResponseBody
 	@RequestMapping(value = "addFile", method = RequestMethod.POST)
 	public String addFile(@RequestBody DbFile file, HttpServletRequest req) {
+
 		System.out.println("********添加制度*********");
 		System.out.println(JSON.toJSONString(file));
 		DbUser user = (DbUser) req.getSession().getAttribute("user");

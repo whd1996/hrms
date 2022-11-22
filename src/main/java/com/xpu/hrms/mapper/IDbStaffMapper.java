@@ -12,10 +12,10 @@ public interface IDbStaffMapper {
 
 	//分页查询所有员工
 	List<HashMap<String, String>> listStaff();
-	
-	LinkedList<DbStaff> selectStaffByDeptInfo(String dpname, String pname);
-	
-	ArrayList<DbStaff> selectStaffByPositionInfo(String position, String position_level);
+
+	LinkedList<DbStaff> selectStaffByDeptInfo(@Param("dpname") String dpname, @Param("pname") String pname);
+
+	ArrayList<DbStaff> selectStaffByPositionInfo(@Param("position") String position, @Param("position_level") String position_level);
 	//统计员工数量
 	int getStaffCount();
 	
@@ -30,7 +30,7 @@ public interface IDbStaffMapper {
 
 	DbStaff selectStaffById(String id);
 
-	List<DbStaff> listUserByZhuGuan(DbStaff staff);
+	//List<DbStaff> listUserByZhuGuan(DbStaff staff);
 
 	List<DbStaff> listStaffByZhuGuan(DbStaff staff);
 
