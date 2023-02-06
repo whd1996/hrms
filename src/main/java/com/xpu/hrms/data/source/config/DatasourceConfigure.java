@@ -79,7 +79,6 @@ public class DatasourceConfigure {
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*Mapper.xml"));
 		return bean.getObject();
 	}
-
 	@Primary
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(

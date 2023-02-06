@@ -46,34 +46,49 @@ return null;
 }
 // 登录
 function login() {
+    let code = $("#captcha").val();
+    let flag = true;
+    $.ajax({
+        type: "get",
+        url: "/hrms/verify?code=" + code,
+        async: false,
+        success: function (data) {
+            if (data !== "验证码正确") {
+                alert(data);//处理get返回结果
+                flag = false;
+            }
+        }
+    });
+    if (flag === false)
+        return false;
     var user = {};
     user.user_account = $("#user_account").val();
     user.user_password = $("#user_password").val();
-    user.id=$("input[id='rememberMe']:checked").val();//这里没用到id  我借用一下用作实现记住密码功能
+    user.id = $("input[id='rememberMe']:checked").val();//这里没用到id  我借用一下用作实现记住密码功能
     $.ajax({
         type: "POST",
         url: "/hrms/user/login",
-        async: true,
+        async: false,
         contentType: "application/json",
         data: JSON.stringify(user),
-        success: function(result) {
+        success: function (result) {
             console.log(result);
             if (result["msg"] != "登录失败") {
                 if (result["msg"] == "总经理登录成功") {
                     alert("总经理,欢迎您使用本系统!");
-                } else if (result["msg"] == "经理登录成功") {    
-               		 if(result["department"] != "人事部"){
-                    	alert(result["department"]+"部门经理,您无权限使用该系统！!");   
-                    	return false;  
-               		 }
-                    alert(result["department"]+"部门经理,登录成功!");
+                } else if (result["msg"] == "经理登录成功") {
+                    if (result["department"] != "人事部") {
+                        alert(result["department"] + "部门经理,您无权限使用该系统！!");
+                        return false;
+                    }
+                    alert(result["department"] + "部门经理,登录成功!");
                 } else if (result["msg"] == "主管登录成功") {
-                	if(result["department"] != "人事部")
-                    	alert(result["department"]+"部门主管,您无权限使用该系统！!");
+                    if (result["department"] != "人事部")
+                        alert(result["department"] + "部门主管,您无权限使用该系统！!");
                     else
-                   	 alert(result["department"]+"部门主管,登录成功!");
+                        alert(result["department"] + "部门主管,登录成功!");
                 } else if (result["msg"] == "员工登录成功") {
-                	if(result["department"] != "人事部"){
+                    if (result["department"] != "人事部") {
                 		alert(result["department"]+"的员工,您无权限使用该系统！!");
                 		return false;
                 	}
