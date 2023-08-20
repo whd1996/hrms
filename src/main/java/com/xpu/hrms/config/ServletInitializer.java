@@ -1,5 +1,6 @@
-package com;
+package com.xpu.hrms.config;
 
+import com.Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

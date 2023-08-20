@@ -73,7 +73,7 @@ public class DatasourceConfigure {
 	public SqlSessionFactory sqlSessionFactory(@Qualifier("datasource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
-		//对应我   们的实体类所在的包,多个package之间可以用逗号或者分号等来进行分隔。包全名
+		//对应我们的实体类所在的包,多个package之间可以用逗号或者分号等来进行分隔。包全名
 		bean.setTypeAliasesPackage("com.xpu.hrms.entity");
 		//Mapper.xml 配置文件路径
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*Mapper.xml"));

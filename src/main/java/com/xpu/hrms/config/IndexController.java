@@ -1,4 +1,4 @@
-package com;
+package com.xpu.hrms.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

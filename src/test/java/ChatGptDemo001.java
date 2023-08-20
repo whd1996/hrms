@@ -12,7 +12,11 @@ public class ChatGptDemo001 {
 
         JSONObject json = new JSONObject();
         //搜索关键字
-        json.set("prompt", "漂亮小姐姐");
+/*
+        "model": "image-alpha-001",
+*/
+        json.set("model", "image-alpha-001");
+        json.set("prompt", "AI机器人 机械 赛博朋克 复古风");
         //生成图片数
         json.set("n", 2);
         //生成图片大小
@@ -23,7 +27,7 @@ public class ChatGptDemo001 {
         //发送请求
         HttpResponse response = HttpRequest.post("https://api.openai.com/v1/images/generations")
                 .headerMap(headers, false)
-                .bearerAuth("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")
+                .bearerAuth("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")
                 .body(String.valueOf(json))
                 .timeout(5 * 60 * 1000)
                 .execute();

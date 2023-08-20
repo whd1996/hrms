@@ -15,14 +15,14 @@ public class CaptchaController {
     @GetMapping("/captcha")
     public ResponseEntity<Void> captcha(HttpServletResponse response, HttpSession session) throws IOException {
         // 设置验证码图片的宽度和高度
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 40);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(60, 30, 4, 3);
         response.setContentType("image/png");
         response.setHeader("Cache-Control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
-        long time = System.currentTimeMillis();
+      /*  long time = System.currentTimeMillis();
         response.setDateHeader("Last-Modified", time);
         response.setDateHeader("Date", time);
-        response.setDateHeader("Expires", time);
+        response.setDateHeader("Expires", time);*/
         // 将生成的验证码图片写入到HTTP响应中
         lineCaptcha.write(response.getOutputStream());
         // 保存验证码的值
